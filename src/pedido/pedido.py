@@ -39,7 +39,9 @@ class Pedido:
         return "Confirmado"
 
     def sugerir_frete_gratis(self, sms_service) -> None:
-        pass
+        if not self.tem_frete_gratis():
+            valor_faltante = round(VALOR_FRETE_GRATIS - self.subtotal(), 2)
+            sms_service.enviar(self.cliente, valor_faltante)
 
 
 def contar_frete_gratis(pedidos: list) -> int:
