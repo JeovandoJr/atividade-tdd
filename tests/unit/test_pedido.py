@@ -26,6 +26,13 @@ def test_bug1_subtotal_considera_quantidade(pedido_pequeno):
 
 
 
+def test_bug2_frete_gratis_com_exatamente_50():
+    # limite: subtotal de R$ 50,00 inclusive tem frete grátis
+    pedido = Pedido("Carla", [Item("Combo", 25.0, 2)])
+    assert pedido.tem_frete_gratis() is True
+
+
+
 # =============================================================
 # PARTE 2 — Implemente com TDD
 # Siga o ciclo: 🔴 escreva o teste → 🟢 implemente → 🟡 refatore
