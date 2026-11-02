@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 VALOR_FRETE_GRATIS = 50.0
+LIMITE_INDISPONIVEL = 0.25
 
 @dataclass
 class Item:
@@ -32,7 +33,7 @@ class Pedido:
         return self.subtotal() - self.subtotal() * percentual / 100
     def situacao(self, unidades_indisponiveis: int) -> str:
         percentual_indisponivel = unidades_indisponiveis / self.quantidade_total()
-        if percentual_indisponivel > 0.25:
+        if percentual_indisponivel > LIMITE_INDISPONIVEL:
             return "Cancelado por falta de estoque"
         if self.tem_frete_gratis():
             return "Confirmado com frete grátis"
