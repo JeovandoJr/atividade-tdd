@@ -39,6 +39,13 @@ def test_bug3_item_mais_barato_retorna_o_menor_preco(pedido_grande):
 
 
 
+def test_bug4_desconto_subtrai_do_subtotal():
+    # R$ 100,00 com 10% de desconto = 90,00 (o original soma: 110,00)
+    pedido = Pedido("Carla", [Item("Combo", 50.0, 2)])
+    assert pedido.total_com_desconto(10) == 90.0
+
+
+
 # =============================================================
 # PARTE 2 — Implemente com TDD
 # Siga o ciclo: 🔴 escreva o teste → 🟢 implemente → 🟡 refatore
