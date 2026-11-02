@@ -118,3 +118,22 @@ def test_req2_pouco_acima_de_25_por_cento_cancela():
 # Requisito 3 — sugerir_frete_gratis(sms_service) -> None
 # Use MagicMock para simular o serviço de SMS
 # Escreva os testes ANTES de implementar o método
+
+def test_req3_abaixo_de_50_aciona_sms_com_cliente_e_valor_faltante(pedido_pequeno):
+    sms = MagicMock()
+    # subtotal 15,00 -> faltam 35,00
+    pedido_pequeno.sugerir_frete_gratis(sms)
+    sms.enviar.assert_called_once_with("Bruno", 35.0)
+
+
+def test_req3_acima_de_50_nao_aciona_sms(pedido_grande):
+    sms = MagicMock()
+    pedido_grande.sugerir_frete_gratis(sms)
+    sms.enviar.assert_not_called()
+
+
+def test_req3_exatamente_50_nao_aciona_sms():
+    sms = MagicMock()
+    Pedido("Carla", [Item("Combo", 25.0, 2)]).sugerir_frete_gratis(sms)
+    sms.enviar.assert_not_called()
+
