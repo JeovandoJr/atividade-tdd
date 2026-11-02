@@ -85,6 +85,34 @@ def test_req1_lista_vazia_retorna_zero():
 # Requisito 2 — situacao(unidades_indisponiveis) -> str
 # Escreva os testes ANTES de implementar o método
 
+def test_req2_mais_de_25_por_cento_indisponivel_cancela_mesmo_com_frete_gratis(pedido_grande):
+    # 5 unidades, 2 indisponíveis = 40% (> 25%); subtotal 87,00 teria frete grátis
+    assert pedido_grande.tem_frete_gratis() is True
+    assert pedido_grande.situacao(2) == "Cancelado por falta de estoque"
+
+
+def test_req2_tudo_disponivel_com_frete_gratis(pedido_grande):
+    assert pedido_grande.situacao(0) == "Confirmado com frete grátis"
+
+
+def test_req2_tudo_disponivel_sem_frete_gratis(pedido_pequeno):
+    assert pedido_pequeno.situacao(0) == "Confirmado"
+
+
+def test_req2_exatamente_25_por_cento_segue_para_regra_do_frete():
+    # 4 unidades, 1 indisponível = exatamente 25% (não cancela)
+    com_frete = Pedido("Ana", [Item("Combo", 15.0, 4)])
+    sem_frete = Pedido("Bruno", [Item("Café", 6.0, 4)])
+    assert com_frete.situacao(1) == "Confirmado com frete grátis"
+    assert sem_frete.situacao(1) == "Confirmado"
+
+
+def test_req2_pouco_acima_de_25_por_cento_cancela():
+    # 7 unidades, 2 indisponíveis ≈ 28,6% (> 25%)
+    pedido = Pedido("Ana", [Item("Combo", 10.0, 7)])
+    assert pedido.situacao(2) == "Cancelado por falta de estoque"
+
+
 
 
 # Requisito 3 — sugerir_frete_gratis(sms_service) -> None
