@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock
-from pedido.pedido import Item, Pedido
+from pedido.pedido import Item, Pedido, contar_frete_gratis
 
 
 # =============================================================
@@ -53,6 +53,32 @@ def test_bug4_desconto_subtrai_do_subtotal():
 
 # Requisito 1 — contar_frete_gratis(pedidos) -> int
 # Escreva os testes ANTES de implementar a função
+
+def _pedido_com_frete():
+    return Pedido("Ana", [Item("Combo", 60.0, 1)])
+
+
+def _pedido_sem_frete():
+    return Pedido("Bruno", [Item("Café", 6.0, 1)])
+
+
+def test_req1_todos_com_frete_gratis():
+    pedidos = [_pedido_com_frete(), _pedido_com_frete(), _pedido_com_frete()]
+    assert contar_frete_gratis(pedidos) == 3
+
+
+def test_req1_nenhum_com_frete_gratis():
+    pedidos = [_pedido_sem_frete(), _pedido_sem_frete()]
+    assert contar_frete_gratis(pedidos) == 0
+
+
+def test_req1_lista_mista():
+    pedidos = [_pedido_com_frete(), _pedido_sem_frete(), _pedido_com_frete()]
+    assert contar_frete_gratis(pedidos) == 2
+
+
+def test_req1_lista_vazia_retorna_zero():
+    assert contar_frete_gratis([]) == 0
 
 
 
