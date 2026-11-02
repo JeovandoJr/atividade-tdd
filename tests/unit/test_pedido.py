@@ -33,6 +33,12 @@ def test_bug2_frete_gratis_com_exatamente_50():
 
 
 
+def test_bug3_item_mais_barato_retorna_o_menor_preco(pedido_grande):
+    # menor preço unitário: refrigerante (7,00)
+    assert pedido_grande.item_mais_barato().nome == "Refrigerante"
+
+
+
 # =============================================================
 # PARTE 2 — Implemente com TDD
 # Siga o ciclo: 🔴 escreva o teste → 🟢 implemente → 🟡 refatore
